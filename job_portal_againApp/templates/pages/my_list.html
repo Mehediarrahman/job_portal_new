@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% block body %}
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Category</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for i in myApplications %}
+        
+   
+        
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i.job.title}}</td>
+      <td>{{i.job.category}}</td>
+      <td>{{i.status}}</td>
+        
+        
+            
+       
+            
+
+    </tr>
+ {% endfor %}
+  </tbody>
+</table>
+
+{% endblock body %}
+
+
+
+
