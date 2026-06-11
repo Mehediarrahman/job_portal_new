@@ -1,41 +1,20 @@
 {% extends 'base/base.html' %}
-{% block body %}
-
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Category</th>
-      <th scope="col">Status</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    {% for i in myApplications %}
-        
-   
-        
-    <tr>
-      <th scope="row">{{forloop.counter}}</th>
-      <td>{{i.job.title}}</td>
-      <td>{{i.job.category}}</td>
-      <td>{{i.status}}</td>
-        
-        
-            
-       
-            
-
-    </tr>
- {% endfor %}
-  </tbody>
-</table>
-
-{% endblock body %}
-
-
-
-
+{% block content %}
+<h2>My Applications</h2>
+{% if myApplications %}
+    <table>
+        <tr>
+            <th>Job Title</th>
+            <th>Status</th>
+        </tr>
+        {% for app in myApplications %}
+        <tr>
+            <td>{{ app.job.title }}</td>
+            <td>{{ app.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>You haven't applied to any jobs yet.</p>
+{% endif %}
+{% endblock %}

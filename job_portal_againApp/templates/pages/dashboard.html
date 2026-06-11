@@ -1,83 +1,32 @@
 {% extends 'base/base.html' %}
-{% block body %}
-
-{% include "pages/messages.html" %}
-
-{% for i in job_data %}
-
-    
-<div class="card shadow-sm border-0 mb-4">
-    <div class="card-body">
-
-        <!-- Top Section -->
-        <div class="d-flex justify-content-between align-items-start">
-
-            <div>
-                <h4 class="fw-bold text-primary mb-1">
-                    {{ i.title }}
-                </h4>
-
-                <h6 class="text-muted mb-2">
-                    {{ i.user.company}}
-                </h6>
-            </div>
-
-            <span class="badge bg-success px-3 py-2">
-                {{ i.category }}
-            </span>
-
-        </div>
-
-        <!-- Job Details -->
-        <div class="mb-3">
-
-            <p class="mb-1">
-                <i class="bi bi-geo-alt-fill text-danger"></i>
-                {{ i.user.address }}
-            </p>
-
-        
-
-           
-        </div>
-
-        <!-- Description -->
-        <p class="text-secondary">
-            {{ i.description }}
-        </p>
-
-        <!-- Skills -->
-        <div class="mb-3">
-
-            {% for b in i.skill_set.all %}
-                <span class="badge bg-light text-dark border me-1 mb-1">
-                    {{ i.name }}
-                </span>
-            {% endfor %}
-
-        </div>
-
-        <!-- Footer -->
-        <div class="d-flex justify-content-between align-items-center">
-
-            <small class="text-muted">
-                25/05/26 ago
-            </small>
-            
-            {% if request.user.user_type == "Job_Seeker" %}
-               
-                
-            <a href="{% url 'applyJob' i.id %}" class="btn btn-primary">
-                Apply Job
-            </a>
-             
+{% block content %}
+<h2>All Jobs</h2>
+{% if job_data %}
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Opening</th>
+            <th>Description</th>
+            {% if user.user_type == "Job_Seeker" %}
+                <th>Action</th>
             {% endif %}
-        </div>
-
-    </div>
-</div>
-
-
-    
-{% endfor %}
-{% endblock body %}
+        </tr>
+        {% for job in job_data %}
+        <tr>
+            <td>{{ job.title }}</td>
+            <td>{{ job.category }}</td>
+            <td>{{ job.opening }}</td>
+            <td>{{ job.description|truncatewords:10 }}</td>
+            {% if user.user_type == "Job_Seeker" %}
+                <td>
+                    <a href="{% url 'applyJob' job.id %}" class="btn">Apply</a>
+                </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No jobs available.</p>
+{% endif %}
+{% endblock %}
